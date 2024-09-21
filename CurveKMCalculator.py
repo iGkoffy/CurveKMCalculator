@@ -1,40 +1,45 @@
 import bpy
 
-# Obtenir l'objet actif
+# Obtenir tous les objets sélectionnés
 context = bpy.context
-aobj = context.active_object
+selected_objects = context.selected_objects
 
-# Vérifier si l'objet est une courbe
-if aobj and aobj.type == 'CURVE':
-    longueur_totale = 0.0  # Initialiser la longueur totale
+# Initialiser la longueur totale pour toutes les courbes
+longueur_totale_globale = 0.0
 
-    # Parcourir les splines de la courbe
-    for spline in aobj.data.splines:
-        if spline.type == 'BEZIER':
-            # Pour les splines Bezier, calculer la distance entre les points de contrôle
-            for i in range(len(spline.bezier_points) - 1):
-                p1 = aobj.matrix_world @ spline.bezier_points[i].co
-                p2 = aobj.matrix_world @ spline.bezier_points[i + 1].co
-                longueur_totale += (p2 - p1).length
-        elif spline.type == 'NURBS' or spline.type == 'POLY':
-            # Pour les splines NURBS et Poly, calculer la distance entre les points
-            for i in range(len(spline.points) - 1):
-                p1 = aobj.matrix_world @ spline.points[i].co.xyz
-                p2 = aobj.matrix_world @ spline.points[i + 1].co.xyz
-                longueur_totale += (p2 - p1).length
+# Parcourir tous les objets sélectionnés
+for obj in selected_objects:
+    # Vérifier si l'objet est une courbe
+    if obj.type == 'CURVE':
+        longueur_totale = 0.0  # Initialiser la longueur pour chaque courbe
 
-    # Convertir la longueur en kilomètres
-    longueur_km = longueur_totale / 1000.0
+        # Parcourir les splines de la courbe
+        for spline in obj.data.splines:
+            if spline.type == 'BEZIER':
+                # Pour les splines Bezier, calculer la distance entre les points de contrôle
+                for i in range(len(spline.bezier_points) - 1):
+                    p1 = obj.matrix_world @ spline.bezier_points[i].co
+                    p2 = obj.matrix_world @ spline.bezier_points[i + 1].co
+                    longueur_totale += (p2 - p1).length
+            elif spline.type == 'NURBS' or spline.type == 'POLY':
+                # Pour les splines NURBS et Poly, calculer la distance entre les points
+                for i in range(len(spline.points) - 1):
+                    p1 = obj.matrix_world @ spline.points[i].co.xyz
+                    p2 = obj.matrix_world @ spline.points[i + 1].co.xyz
+                    longueur_totale += (p2 - p1).length
 
-    # Afficher la longueur totale avec plus de précision (6 chiffres après la virgule)
-    print(f"Longueur totale de la courbe : {longueur_totale:.6f} unités")
-    print(f"Longueur totale de la courbe : {longueur_km:.6f} km")
+        # Ajouter la longueur de cette courbe à la longueur globale
+        longueur_totale_globale += longueur_totale
 
-    # Afficher un popup avec la longueur totale en km avec précision
-    def draw(self, context):
-        self.layout.label(text=f"Longueur de la courbe : {longueur_km:.6f} km")
-    
-    bpy.context.window_manager.popup_menu(draw, title="Longueur de la courbe", icon="INFO")
+# Convertir la longueur totale en kilomètres
+longueur_km_globale = longueur_totale_globale / 1000.0
 
-else:
-    print("Veuillez sélectionner un objet de type courbe.")
+# Afficher la longueur totale dans la console
+print(f"Longueur totale des courbes sélectionnées : {longueur_totale_globale:.6f} unités")
+print(f"Longueur totale des courbes sélectionnées : {longueur_km_globale:.6f} km")
+
+# Afficher un popup avec la longueur totale en km avec précision
+def draw(self, context):
+    self.layout.label(text=f"Longueur totale des courbes : {longueur_km_globale:.6f} km")
+
+bpy.context.window_manager.popup_menu(draw, title="Longueur totale des courbes", icon="INFO")

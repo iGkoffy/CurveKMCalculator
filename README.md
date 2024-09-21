@@ -1,38 +1,37 @@
 
-### Script Blender : Calcul de la Longueur d'une Courbe
+### Blender Multi-Curve Length Calculator
 
-Ce script Python pour Blender permet de calculer avec précision la longueur totale d'une courbe (**Bezier**, **NURBS**, ou **POLY**) directement à partir des splines, sans conversion en mesh.
+This Python script for Blender allows you to calculate the total length of multiple selected curves (**Bezier**, **NURBS**, or **POLY**) in the scene. The script sums the lengths of all selected curves and displays the result both in **Blender units** and **kilometers (km)**.
 
-#### Fonctionnalités :
-- Prend en charge les types de courbes : **Bezier**, **NURBS**, et **POLY**.
-- Calcule la longueur en utilisant les points de contrôle des splines, avec prise en compte des transformations globales de l'objet.
-- Affiche la longueur en **unités Blender** ainsi qu'en **kilomètres (km)**, avec une précision ajustable (par défaut 6 chiffres après la virgule).
-- Affiche les résultats dans la console et dans un popup Blender.
+#### Features:
+- Supports multiple curve types: **Bezier**, **NURBS**, and **POLY**.
+- Calculates the total length of all selected curves in the scene.
+- Displays the total length in **Blender units** as well as in **kilometers**.
+- Shows results in both the Blender console and in a popup window for convenience.
+- Provides high precision with results displayed to 6 decimal places.
 
-#### Utilisation :
-1. Sélectionnez un objet de type **courbe** dans Blender.
-2. Exécutez le script depuis l'éditeur de texte de Blender.
-3. Le script affichera la longueur totale de la courbe dans la console Blender ainsi que dans un popup.
+#### Usage:
+1. **Select** the curves you want to calculate the length for.
+2. Open the **Text Editor** in Blender, paste the script, and **Run Script**.
+3. The script will calculate the total length of all selected curves and display the result in the console and a popup window.
 
-#### Exemple :
-- Longueur en unités Blender : `33262.078612 unités`
-- Longueur convertie en kilomètres : `33.262079 km`
+#### Example:
+- Total length of selected curves: `33262.078612 units`
+- Total length converted to kilometers: `33.262079 km`
 
-#### Configuration de précision :
-Vous pouvez ajuster la précision des résultats en modifiant le format d'affichage (actuellement réglé sur 6 chiffres après la virgule).
-
----
-
-#### Comment utiliser :
-- Téléchargez le script.
-- Ouvrez-le dans l'éditeur de texte de Blender.
-- Sélectionnez une courbe, puis exécutez le script.
+#### Precision:
+By default, the script provides precision up to 6 decimal places. You can easily adjust this by modifying the format of the printed output if needed.
 
 ---
 
-Ce script est utile pour ceux qui souhaitent obtenir une mesure précise de la longueur d'une courbe dans Blender sans avoir à la convertir en mesh, tout en conservant la flexibilité des types de courbes pris en charge.
+#### How to Use:
+- Download the script and open it in Blender's **Text Editor**.
+- Select multiple curves in the 3D viewport.
+- Run the script to get the total length of the selected curves in kilometers and Blender units.
 
 ---
 
-#### Contributions :
-Les contributions sont les bienvenues ! Si vous souhaitez améliorer le script ou ajouter des fonctionnalités, n'hésitez pas à soumettre des pull requests.
+This tool is particularly useful for measuring the total length of roads, paths, or any other curved structures in your scene that need to be calculated with precision.
+
+#### Contributions:
+Contributions are welcome! If you want to improve the script or add new features, feel free to submit a pull request or open an issue.
